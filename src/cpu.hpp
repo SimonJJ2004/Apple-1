@@ -438,8 +438,8 @@ void iTYA(u_int8_t* oper){
 typedef void (*callback)(u_int8_t*); 
 struct opcode{
     u_int8_t opcode;
-    addressModes mode;
     int cycles;
+    addressModes mode;
     callback func;
             
 };
