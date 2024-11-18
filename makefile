@@ -16,9 +16,9 @@ main:
 install:
 	mkdir -p /usr/local/bin
 	cp $(BIN) /usr/local/bin/apple1
-	mkdir -p ~/Apple-1/roms 
-	cp $(ROMS) ~/Apple-1/roms
+	mkdir -p /etc/Apple-1/roms 
+	cp $(ROMS) /etc/Apple-1/roms
 
 remove:
-	rm -r ~/Apple-1
+	rm -r /etc/Apple-1
 	rm /usr/local/bin/apple1

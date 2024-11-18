@@ -19,17 +19,16 @@ int main(int argc, char* argv[]){
         printf("Error initializing SDL!\n");
         return -1;
     }
-    std::string homedir = std::getenv("HOME");
 
-    std::fstream rom(homedir + "/Apple-1/roms/ROM.bin", std::fstream::in);
+    std::fstream rom("/etc/Apple-1/roms/ROM.bin", std::fstream::in);
     rom.read((char*)&ram.memptr[0xFF00], 256);
     rom.close();
 
-    std::fstream basic(homedir + "/Apple-1/roms/basic.rom", std::fstream::in);
+    std::fstream basic("/etc/Apple-1/roms/basic.rom", std::fstream::in);
     basic.read((char*)&ram.memptr[0xE000], 4096);
     basic.close();
 
-    std::fstream charset(homedir + "/Apple-1/roms/charset.bin", std::fstream::in);
+    std::fstream charset("/etc/Apple-1/roms/charset.bin", std::fstream::in);
     charset.read((char*)&charrom[0], 1024);
     charset.close();
 
