@@ -35,7 +35,7 @@ int main(int argc, char* argv[]){
     basic.read((char*)&ram.memptr[0xE000], 4096);
     basic.close();
 
-    std::fstream charset("/etc/Apple-1/roms/charset.bin", std::fstream::in);
+    std::fstream charset("/etc/Apple-1/roms/CHARSET.bin", std::fstream::in);
     if(charset.fail()){
         printf("error: couldn't find character rom file!\n");
         return -1;
