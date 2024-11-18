@@ -19,15 +19,15 @@ int main(int argc, char* argv[]){
         return -1;
     }
     
-    std::fstream rom("ROM.bin", std::fstream::in);
+    std::fstream rom("../roms/ROM.bin", std::fstream::in);
     rom.read((char*)&ram.memptr[0xFF00], 256);
     rom.close();
 
-    std::fstream basic("basic.rom", std::fstream::in);
+    std::fstream basic("../roms/basic.rom", std::fstream::in);
     basic.read((char*)&ram.memptr[0xE000], 4096);
     basic.close();
 
-    std::fstream charset("charset.bin", std::fstream::in);
+    std::fstream charset("../roms/charset.bin", std::fstream::in);
     charset.read((char*)&charrom[0], 1024);
     charset.close();
 
