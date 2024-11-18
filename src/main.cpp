@@ -6,7 +6,6 @@
 #include "cpu.hpp"
 #include "display.hpp"
 #include <fstream>
-#include <string>
 
 /*
 TODO: 
@@ -21,14 +20,26 @@ int main(int argc, char* argv[]){
     }
 
     std::fstream rom("/etc/Apple-1/roms/ROM.bin", std::fstream::in);
+    if(rom.bad()){
+        printf("error: couldn't find rom file!\n");
+        return -1;
+    }
     rom.read((char*)&ram.memptr[0xFF00], 256);
     rom.close();
 
     std::fstream basic("/etc/Apple-1/roms/basic.rom", std::fstream::in);
+    if(basic.bad()){
+        printf("error: couldn't find basic rom file!\n");
+        return -1;
+    }
     basic.read((char*)&ram.memptr[0xE000], 4096);
     basic.close();
 
     std::fstream charset("/etc/Apple-1/roms/charset.bin", std::fstream::in);
+    if(charset.bad()){
+        printf("error: couldn't find character rom file!\n");
+        return -1;
+    }
     charset.read((char*)&charrom[0], 1024);
     charset.close();
 
