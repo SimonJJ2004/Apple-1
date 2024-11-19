@@ -44,7 +44,7 @@ int main(int argc, char* argv[]){
     charset.close();
 
     bool running = true;
-    SDL_Thread* cpuThread = SDL_CreateThread((SDL_ThreadFunction)RunCPU6502, "MOS6502", &running);
+    SDL_Thread* cpuThread = SDL_CreateThread((SDL_ThreadFunction)cpu::RunCPU6502, "MOS6502", &running);
     SDL_Thread* flashCursor = SDL_CreateThread((SDL_ThreadFunction)Flasher, "CurFlash", &running);
     CreateScreen(&running);
 

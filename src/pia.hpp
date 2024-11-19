@@ -53,7 +53,6 @@ void UpdatePIA(){
             //write
             if(lastKBD != ram.memptr[KBD]){
                 if((CRA & 4) == 0){ //bit 2 of CRA was zero (DDRA access)
-                    printf("DDRA access\n");
                     DDRA = ram.memptr[KBD];
                 }
                 lastKBD = ram.memptr[KBD];
@@ -74,7 +73,7 @@ void UpdatePIA(){
         case DSP:{
             //write
             if(lastDSP != ram.memptr[DSP]){
-                if((CRB & 4) == 0){ //bit 2 of CRB was zero (DDRA access)
+                if((CRB & 4) == 0){ //bit 2 of CRB was zero (DDRB access)
                     DDRB = ram.memptr[DSP];
                 }
             }
