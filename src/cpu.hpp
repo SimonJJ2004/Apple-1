@@ -442,8 +442,7 @@ namespace cpu{
         u_int8_t opcode;
         int cycles;
         addressModes mode;
-        callback func;
-                
+        callback func;     
     };
 
     //ABSX, ABSY, INDINDX and REL addressing modes can use 1/2 more cycles when crossing the page boundary!
@@ -764,5 +763,6 @@ namespace cpu{
             if(!jumptaken)
                 FetchNextByte();
         }
+        free(ram.memptr);
     }
 }

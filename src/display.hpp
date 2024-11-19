@@ -92,6 +92,12 @@ void CreateScreen(bool* running){
                 case SDL_KEYDOWN:
                 {
                     u_int8_t key = (u_int8_t)((e.key.keysym.sym & ~DDRA));
+                    if(e.key.keysym.sym == SDLK_F1){ //step mode
+                        printf("\t****DEBUG MODE****\n");
+                        printf("type h for help, q to exit\n\n");
+                        cpu::stepmode = true;
+                        break;
+                    }
                     if(key > 0x30 && key <= 0x39 && e.key.keysym.mod & KMOD_SHIFT){
                         key -= 0x10;
                     }
