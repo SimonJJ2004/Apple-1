@@ -84,9 +84,15 @@ void CreateScreen(bool* running){
     }
     surface = SDL_GetWindowSurface(screen);
 
+    int fps = 60;
     SDL_Event e;
     
+    u_int64_t lastticks = SDL_GetTicks64();
     while(*running){
+        if(SDL_GetTicks64() - lastticks < 1000/fps){
+            continue;
+        }
+        lastticks = SDL_GetTicks64();
         while(SDL_PollEvent(&e) > 0){
             switch(e.type){
                 case SDL_KEYDOWN:
