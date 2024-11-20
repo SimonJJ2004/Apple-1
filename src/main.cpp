@@ -19,7 +19,7 @@ int main(int argc, char* argv[]){
         return -1;
     }
 
-    std::fstream rom("/etc/Apple-1/roms/ROM.bin", std::fstream::in);
+    std::fstream rom("/etc/Apple-1/roms/ROM.bin", std::fstream::in | std::fstream::binary);
     if(rom.fail()){
         printf("error: couldn't find rom file!\n");
         return -1;
@@ -27,7 +27,7 @@ int main(int argc, char* argv[]){
     rom.read((char*)&ram.memptr[0xFF00], 256);
     rom.close();
 
-    std::fstream basic("/etc/Apple-1/roms/basic.rom", std::fstream::in);
+    std::fstream basic("/etc/Apple-1/roms/basic.rom", std::fstream::in | std::fstream::binary);
     if(basic.fail()){
         printf("error: couldn't find basic rom file!\n");
         return -1;
@@ -35,7 +35,7 @@ int main(int argc, char* argv[]){
     basic.read((char*)&ram.memptr[0xE000], 4096);
     basic.close();
 
-    std::fstream charset("/etc/Apple-1/roms/CHARSET.bin", std::fstream::in);
+    std::fstream charset("/etc/Apple-1/roms/CHARSET.bin", std::fstream::in | std::fstream::binary);
     if(charset.fail()){
         printf("error: couldn't find character rom file!\n");
         return -1;
