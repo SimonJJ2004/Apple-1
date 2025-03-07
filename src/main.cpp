@@ -1,12 +1,8 @@
-#include <SDL.h>
-#include <stdio.h>
-#include <unistd.h>
-#include "memory.hpp"
-#include "pia.hpp"
-#include "cpu.hpp"
-#include "display.hpp"
+#include "memory.h"
+#include "display.h"
+#include "pia.h"
+#include "cpu.h"
 #include <fstream>
-
 /*
 TODO: 
     Tape Interface Emulation
@@ -26,7 +22,7 @@ int main(int argc, char* argv[]){
     }
     rom.read((char*)&ram.memptr[0xFF00], 256);
     rom.close();
-
+    /*
     std::fstream basic("/etc/Apple-1/roms/basic.rom", std::fstream::in | std::fstream::binary);
     if(basic.fail()){
         printf("error: couldn't find basic rom file!\n");
@@ -34,7 +30,7 @@ int main(int argc, char* argv[]){
     }
     basic.read((char*)&ram.memptr[0xE000], 4096);
     basic.close();
-
+    */
     std::fstream charset("/etc/Apple-1/roms/CHARSET.bin", std::fstream::in | std::fstream::binary);
     if(charset.fail()){
         printf("error: couldn't find character rom file!\n");
@@ -43,13 +39,27 @@ int main(int argc, char* argv[]){
     charset.read((char*)&charrom[0], 1024);
     charset.close();
 
-    bool running = true;
-    SDL_Thread* cpuThread = SDL_CreateThread((SDL_ThreadFunction)cpu::RunCPU6502, "MOS6502", &running);
-    SDL_Thread* flashCursor = SDL_CreateThread((SDL_ThreadFunction)Flasher, "CurFlash", &running);
-    CreateScreen(&running);
 
-    SDL_WaitThread(cpuThread, NULL);
+    std::fstream acirom("/etc/Apple-1/roms/wozaci.bin", std::fstream::in | std::fstream::binary);
+    if(acirom.fail()){
+        printf("error: couldn't find tape interface rom file!\n");
+        return -1;
+    }
+    acirom.read((char*)&ram.memptr[0xC000], 256);
+    acirom.seekg(0, std::ios::beg);
+    acirom.read((char*)&ram.memptr[0xC100], 256);
+    acirom.close();
+
+    bool running = true;
+    CreateScreen();
+    SDL_Thread* flashCursor = SDL_CreateThread((SDL_ThreadFunction)Flasher, "CurFlash", &running);
+    SDL_Thread* cpuThread = SDL_CreateThread((SDL_ThreadFunction)cpu::CpuThread, "CPU", &running);
+    UpdateScreen();
+    running = false;
     SDL_WaitThread(flashCursor, NULL);
+    SDL_WaitThread(cpuThread, NULL);
+    free(ram.memptr);
+    SDL_DestroyWindow(screen);
     SDL_Quit();
     return 0;
 }

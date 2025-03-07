@@ -1,7 +1,7 @@
 SDIR=src
 BDIR=bin
 
-SRC=$(SDIR)/main.cpp
+SRC=$(SDIR)/*.cpp
 
 BIN=$(BDIR)/apple1
 

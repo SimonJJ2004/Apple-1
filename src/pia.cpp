@@ -1,26 +1,4 @@
-#define KBD 0xd010 //RS0 = 0 RS1 = 0
-#define KBDCR 0xd011 //RS0 = 1 RS1 = 0
-#define DSP 0xd012 //RS0 = 0 RS1 = 1
-#define DSPCR 0xd013 //RS0 = 1 RS1 = 1
-
-
-u_int8_t DDRA = 0;
-u_int8_t DDRB = 0;
-
-u_int8_t CRA = 0;
-u_int8_t CRB = 0;
-
-u_int8_t lastKBD = 0;
-u_int8_t lastKBDCR = 0;
-u_int8_t lastDSP = 0;
-u_int8_t lastDSPCR = 0;
-
-bool flash = false;
-
-int pixelx = 0;
-int pixely = 0;
-void TypeChar(u_int8_t ascii);
-void DrawChar(u_int8_t ascii, int x, int y);
+#include "pia.h"
 
 void Flasher(bool* running){
     while(*running){
@@ -31,10 +9,16 @@ void Flasher(bool* running){
     }
 }
 
+void DumpTerminal(char c){
+    DrawChar(' ', pixelx, pixely);
+    TypeChar(c);
+    SDL_Delay(20);
+}
+
 void UpdateTerminal(){
     if(ram.memptr[DSP] & 0x7F && ram.memptr[DSP] != 0x7F){
-        DrawChar(' ', pixelx, pixely);
-        TypeChar(ram.memptr[DSP] & 0x7F);
+        char c = ram.memptr[DSP] & 0x7F;
+        DumpTerminal(c);
         ram.memptr[DSP] = 0x7F;
     }
     else{
@@ -42,12 +26,12 @@ void UpdateTerminal(){
             DrawChar(' ', pixelx, pixely);
         else
             DrawChar('@', pixelx, pixely);
-        ram.memptr[DSP] = 0x7F;
     }
 }
 
+
+
 void UpdatePIA(){
-    
     switch(ram.lastRamAccess){
         case KBD:{
             //write
@@ -75,21 +59,22 @@ void UpdatePIA(){
             if(lastDSP != ram.memptr[DSP]){
                 if((CRB & 4) == 0){ //bit 2 of CRB was zero (DDRB access)
                     DDRB = ram.memptr[DSP];
+                    CRB |= 4;
                 }
             }
             lastDSP = ram.memptr[DSP];
-           break;
+            break;
         }
         case DSPCR:{
             //write
             if(lastDSPCR != ram.memptr[DSPCR]){
                 CRB = ram.memptr[DSPCR];
-                lastKBDCR = ram.memptr[DSPCR];
+                lastDSPCR = ram.memptr[DSPCR];
             }
             break;
         }
         default:
-            UpdateTerminal();
             break;
     }
+    UpdateTerminal();
 }
