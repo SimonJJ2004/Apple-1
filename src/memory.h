@@ -9,6 +9,7 @@
 #define PIASIZE 0x03
 #include <stdio.h>
 #include <stdlib.h>
+#include <cstdlib>
 
 class Memory{
     public:

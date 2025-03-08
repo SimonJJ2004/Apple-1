@@ -2,6 +2,8 @@
 #include "memory.h"
 #include "pia.h"
 #include <unistd.h>
+#include <chrono>
+#include <thread>
 #define STACK 0x100
 
 //vectors

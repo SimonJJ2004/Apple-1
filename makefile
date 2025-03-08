@@ -11,7 +11,7 @@ CC=g++
 SDL=`sdl2-config --cflags --libs`
 
 main:
-	$(CC) $(SRC) -o $(BIN) $(SDL)
+	$(CC) $(SRC) -o $(BIN) $(SDL) -std=c++17
 
 install:
 	mkdir -p /usr/local/bin
