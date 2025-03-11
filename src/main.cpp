@@ -53,11 +53,11 @@ int main(int argc, char* argv[]){
     bool running = true;
     CreateScreen();
     SDL_Thread* flashCursor = SDL_CreateThread((SDL_ThreadFunction)Flasher, "CurFlash", &running);
-    SDL_Thread* cpuThread = SDL_CreateThread((SDL_ThreadFunction)cpu::CpuThread, "CPU", &running);
+    //SDL_Thread* cpuThread = SDL_CreateThread((SDL_ThreadFunction)cpu::CpuThread, "CPU", &running);
     UpdateScreen();
     running = false;
     SDL_WaitThread(flashCursor, NULL);
-    SDL_WaitThread(cpuThread, NULL);
+    //SDL_WaitThread(cpuThread, NULL);
     free(ram.memptr);
     SDL_DestroyWindow(screen);
     SDL_Quit();

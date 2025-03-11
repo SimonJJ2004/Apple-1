@@ -503,7 +503,7 @@ unsigned int cpu::StepInstruction(){
     unsigned int cycles = ParseOpcode();
     cycles += bonuscycle ? 1 : 0;
     bonuscycle = false;
-    std::this_thread::sleep_for(std::chrono::nanoseconds(cycles * 1000));
+    
     if(!jumptaken){
         PC++;
     }
@@ -515,12 +515,4 @@ void cpu::InitCPU6502(){
     PF.I = 1;
     PF.empty = 1;
     PC = *ram.ReadMem(RESET) | (*ram.ReadMem(RESET+1) << 8);
-}
-
-void cpu::CpuThread(bool* running){
-    while(*running){
-        StepInstruction();
-        if(aci.recording) aci.writeBitToTape();
-        UpdatePIA();    
-    }
 }

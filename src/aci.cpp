@@ -64,7 +64,6 @@ void ACI::simulateHeader(){
     PlaybackBit(0);
     sleep(21);
     ram.promA0 = !ram.promA0;
-    usleep(50);
     PlaybackBit(0);
 }
 

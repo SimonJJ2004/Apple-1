@@ -197,7 +197,9 @@ int UpdateScreen(){
     u_int64_t lastticks = SDL_GetTicks64();
     while(running){
         if(SDL_GetTicks64() - lastticks < 1000/fps){
-            SDL_Delay(1);
+            cpu::StepInstruction();
+            if(aci.recording) aci.writeBitToTape();
+            UpdatePIA();
             continue;
         }
         lastticks = SDL_GetTicks64();
