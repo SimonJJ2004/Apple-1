@@ -5,8 +5,8 @@
 #define RAM2SIZE 0x1000
 #define ROMSTART 0xff00
 #define ROMSIZE 0xff
-#define PIASTART 0xD010
-#define PIASIZE 0x03
+#define PIASTART 0xD000
+#define PIASIZE 0xFF
 #include <stdio.h>
 #include <stdlib.h>
 #include <cstdint>

@@ -4,7 +4,7 @@
 #include "display.h"
 #define KBD 0xd010 //RS0 = 0 RS1 = 0
 #define KBDCR 0xd011 //RS0 = 1 RS1 = 0
-#define DSP 0xd012 //RS0 = 0 RS1 = 1
+#define DSP 0xd002 //RS0 = 0 RS1 = 1
 #define DSPCR 0xd013 //RS0 = 1 RS1 = 1
 
 

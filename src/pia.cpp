@@ -16,17 +16,18 @@ void DumpTerminal(char c){
 }
 
 void UpdateTerminal(){
-    if(ram.memptr[DSP] & 0x7F && ram.memptr[DSP] != 0x7F){
-        char c = ram.memptr[DSP] & 0x7F;
-        DumpTerminal(c);
-        ram.memptr[DSP] = 0x7F;
+    for(int addr = 0; addr <= 0x0f; addr++){
+        if(ram.memptr[DSP | (addr << 4)] & 0x7F && ram.memptr[DSP | (addr << 4)] != 0x7F){
+            char c = ram.memptr[DSP | (addr << 4)] & 0x7F;
+            DumpTerminal(c);
+            ram.memptr[DSP | (addr << 4)] = 0x7F;
+            break;
+        }
     }
-    else{
-        if(flash)
-            DrawChar(' ', pixelx, pixely);
-        else
-            DrawChar('@', pixelx, pixely);
-    }
+    if(flash)
+        DrawChar(' ', pixelx, pixely);
+    else
+        DrawChar('@', pixelx, pixely);
 }
 
 

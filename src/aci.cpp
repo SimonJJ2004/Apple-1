@@ -62,7 +62,7 @@ u_int8_t ACI::SetPlaybackByte(){
 void ACI::simulateHeader(){
     sleep(4);
     PlaybackBit(0);
-    sleep(21);
+    sleep(3);
     ram.promA0 = !ram.promA0;
     PlaybackBit(0);
 }

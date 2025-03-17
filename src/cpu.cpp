@@ -512,6 +512,7 @@ unsigned int cpu::StepInstruction(){
 }
 
 void cpu::InitCPU6502(){
+    cpu::totalCycles = 0;
     PF.I = 1;
     PF.empty = 1;
     PC = *ram.ReadMem(RESET) | (*ram.ReadMem(RESET+1) << 8);

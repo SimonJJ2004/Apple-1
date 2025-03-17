@@ -7,7 +7,7 @@ BIN=$(BDIR)/apple1
 
 ROMS=roms/*
 
-CC=g++
+CC=clang++
 SDL=`sdl2-config --cflags --libs`
 
 main:

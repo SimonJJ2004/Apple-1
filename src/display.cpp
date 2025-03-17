@@ -110,8 +110,10 @@ int HandleInput(SDL_Event e){
                             cpu::DisplayRegisters();
                             break;
                         case 's':{
-                            //todo
+                            cpu::StepInstruction();
                             cpu::DisplayRegisters();
+                            if(aci.recording) aci.writeBitToTape();
+                            UpdatePIA();
                             break;
                         }
                         default:
@@ -143,6 +145,10 @@ int HandleInput(SDL_Event e){
                 break;
             }
 
+            else if(e.key.keysym.sym == SDLK_F5){
+                cpu::InitCPU6502();
+                break;
+            }
             if(key > 0x30 && key <= 0x39 && e.key.keysym.mod & KMOD_SHIFT){
                 key -= 0x10;
             }
@@ -197,9 +203,12 @@ int UpdateScreen(){
     u_int64_t lastticks = SDL_GetTicks64();
     while(running){
         if(SDL_GetTicks64() - lastticks < 1000/fps){
-            cpu::StepInstruction();
-            if(aci.recording) aci.writeBitToTape();
-            UpdatePIA();
+            if(!cpu::stepmode){
+                cpu::StepInstruction();
+                //cpu::DisplayRegisters();
+                if(aci.recording) aci.writeBitToTape();
+                UpdatePIA();
+            }
             continue;
         }
         lastticks = SDL_GetTicks64();

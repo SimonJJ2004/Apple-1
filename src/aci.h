@@ -4,7 +4,7 @@
 #include "cpu.h"
 #include "memory.h"
 #define zero0 200
-#define one 800
+#define one 400
 
 class ACI{
     private:
