@@ -211,7 +211,6 @@ int UpdateScreen(){
             }
             continue;
         }
-        lastticks = SDL_GetTicks64();
         //*** Input Handling ***
         while(SDL_PollEvent(&e) > 0){
             if(HandleInput(e) == -1){
@@ -219,6 +218,7 @@ int UpdateScreen(){
             }
         }
         SDL_UpdateWindowSurface(screen);
+        lastticks = SDL_GetTicks64();
     }
     return 0;
 }
